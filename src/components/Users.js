@@ -2,15 +2,15 @@ function Users (props)  {
     return (
         <div>
 {/*Table starts here*/}
-<table className="table table-bordered table-sm">
+<table className="table table-bordered table-lg">
     <thead>
         <tr>
-            <th className="col-3"><button onClick={props.filter}>Users (Filter by TBD)</button></th>
-            <th className="col-3"><button onClick={props.sortUsers}>Name (Sort by last name)</button></th>        
-            <th className="col-3">Address</th>
-            <th className="col-3">Cell Phone</th>
-            <th className="col-3">Location</th>
-            <th className="col-3">Time Zone</th>
+            <th className="col-2"><button onClick={props.filter}>Users (Filter by TBD)</button></th>
+            <th className="col-2"><button onClick={props.sortUsers}>Name (Sort by last name)</button></th>        
+            <th className="col-2">Location</th>
+            <th className="col-2">Cell Phone</th>
+            <th className="col-2">Time Zone</th>
+            <th className="col-2">Email Address</th>
             </tr>
     </thead>
 
@@ -20,10 +20,11 @@ function Users (props)  {
             return(
                 <tr key={login.uuid}>
                     <td className="col-3"><img src={picture.large} alt="employee picture" /></td>
-                    <td className="col-3">{email}</td>
+                    <td className="col-3"> {name.first} {name.last}</td>
                     <td className="col-3">{location.state}</td> 
-                    <td className="col-3">{timezone.offset}</td>
-                    <td className="col-3">{cell}</td>        
+                    <td className="col-3">{cell}</td>  
+                    <td className="col-3">{location.timezone.offset}</td> 
+                    <td className="col-3">{email}</td>     
                 </tr>
             );
         })}

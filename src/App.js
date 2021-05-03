@@ -1,9 +1,14 @@
-import Header from './components/Header'
+import React from 'react';
+import UserContainer from './containers/UserContainer';
+import NavBar from './components/NavBar'
 
 function App() {
   return (
     <div className='container'>
-      <Header />
+    
+      <NavBar />
+
+      <UserContainer />
     </div>
   );
 }
