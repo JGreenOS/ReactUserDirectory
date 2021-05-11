@@ -45,6 +45,63 @@ sortUsers = () => {
     this.setState({alpha: true})
 }
 
+//filtering
+
+// filterOver = () => {
+//     const filterUser = this.state.filterResultOver;
+//     const filteredAgeOver = filterUser.filter(user => user.dob.age >= 21);
+//     this.setState({showResult: filteredAgeOver});
+// }
+
+// filterUnder = () => {
+//     const filterUser = this.state.filterResultUnder;
+//     const filteredAgeUnder = filterUser.filter(user => user.dob.age <= 21);
+//     this.setState({showResult: filteredAgeUnder});
+// }
+
+// filter = () => {
+//     const currentFilter = this.state.filter;
+
+//     if(currentFilter === '') {
+//         this.filterOver();
+//         this.setState({filter: 'filteredAgeOver'});
+//     }else if (currentFilter === 'filteredAgeOver') {
+//         this.filterUnder();
+//         this.setState({filter: 'filteredAgeUnder'});
+// } else {
+//     this.setState({showResult: this.state.result});
+//     this.setState({filter: ''});
+// }
+
+
+filterMale = () => {
+    const filterUser = this.state.filterResultMale;
+    const filteredMale = filterUser.filter(user => user.gender === "male");
+    this.setState({showResult: filteredMale});
+}
+
+filterFemale = () => {
+    const filterUser = this.state.filterResultFemale;
+    const filteredFemale = filterUser.filter(user => user.gender === "female");
+    this.setState({showResult: filteredFemale});
+}
+
+filter = () => {
+    const currentFilter = this.state.filter;
+
+    if(currentFilter === '') {
+        this.filterMale();
+        this.setState({filter: 'male'});
+    }
+    else if(currentFilter === 'male') {
+        this.filterFemale();
+        this.setState({filter: 'female'});
+        } 
+    else {
+    this.setState({showResult: this.state.result});
+    this.setState({filter: ''});
+}
+}
   //need to mount the object to the DOM
     componentDidMount (){
         this.getUsers();
@@ -58,6 +115,7 @@ sortUsers = () => {
                 <Users
                 users={this.state.showResult}
                 sortUsers={this.sortAlpha}
+                filterMale={this.filterMale}
                 filter={this.filter}
                 />
             </div>
