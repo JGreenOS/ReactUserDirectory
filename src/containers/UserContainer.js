@@ -9,7 +9,7 @@ class UserContainer extends Component {
     state = {
         result: [],
         filter: '',
-        filterResultTimezone: [],
+        filterResultLocation: [],
         showResult: [],
         alpha: false,
     }
@@ -19,14 +19,29 @@ class UserContainer extends Component {
         API.search()
         .then(res => {
             this.setState({result: res.data.results});
-            this.setState({filterResultTimezone: res.data.results});
+            this.setState({filterResultLocation: res.data.results});
             this.setState({showResult: res.data.results}); 
         })
         .catch(err => console.log(err));
     }
 
+//function to sort by location
+    compare = (a, b) => {
+        const locationA = a.location.state();
+        const locationB = b.location.state();
+
+        let compare = 0;
+        if( locationA > locationB) {
+            compare = 1;
+        } else if(locationA < locationB) {
+            compare = -1;
+        }
+        return compare;
+    }
+
+//magic code to sort the array of locations and sort it alphabetically
 sortUsers = () => {
-    this.setState({showResult: this.state.showResult.sort(this.comparison)});
+    this.setState({showResult: this.state.showResult.sort(this.compare)});
     this.setState({alpha: true})
 }
 
