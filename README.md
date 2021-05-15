@@ -16,11 +16,9 @@ The user should be able to:
 
   * Filter the users by age. In this example, users are filtered for age (over 33 and under 33). While the current age for health insurance by an employer is 26, the test data does not have enough users under the age of 26. 
 
-The app is deployed at 
+The app is deployed at [deployed application](https://quiet-caverns-06650.herokuapp.com/) 
 
-[deployment](https://https://quiet-caverns-06650.herokuapp.com/) 
-
-[image](2021-05-14_23-40-12.png)
+[screenshot](2021-05-14_23-40-12.png)
 
 
 
