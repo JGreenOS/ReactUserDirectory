@@ -9,119 +9,115 @@ class UserContainer extends Component {
     state = {
         result: [],
         filter: '',
-        filterResultLocation: [],
+        filterOver: [],
+        filterUnder: [],
         showResult: [],
-        alpha: false,
-    }
+        alpha: true,  
+    };
+
 
     //get data from API
     getUsers = () => {
         API.search()
         .then(res => {
             this.setState({result: res.data.results});
-            this.setState({filterResultLocation: res.data.results});
+            this.setState({filterUnder: res.data.results});
+            this.setState({filterOver: res.data.results});
             this.setState({showResult: res.data.results}); 
         })
         .catch(err => console.log(err));
     }
 
-//function to sort by location
-    compare = (a, b) => {
-        const locationA = a.location.state();
-        const locationB = b.location.state();
 
-        let compare = 0;
-        if( locationA > locationB) {
-            compare = 1;
-        } else if(locationA < locationB) {
-            compare = -1;
-        }
-        return compare;
+  //sorting
+    comparison = (a, b) => {
+    const userA = a.name.last.toLowerCase(), userB = b.name.last.toLowerCase();
+        const comparison = 0;
+
+    if(userA > userB) {
+    // eslint-disable-next-line no-const-assign
+    comparison = 1;
+        } else if (userA < userB) {
+    // eslint-disable-next-line no-const-assign
+    comparison = -1;
+        } 
+        return comparison;
     }
 
-//magic code to sort the array of locations and sort it alphabetically
+// //sort the array
+    sortUsers = () => {
+     this.setState({showResult: this.state.showResult.sort(this.comparison)});
+        this.setState({alpha: false})
+        }
+    
+// //reverse alpha order sort
+    comparisonR = (a, b) => {
+        const userA = a.name.last.toLowerCase(), userB = b.name.last.toLowerCase();
+        let comparison = 0;
+        
+        if(userA < userB) {
+            comparison = 1;
+        } else if (userA > userB) {
+            comparison = -1;
+        } 
+        return comparison *-1;
+        }
+    sortUsersRev = () => {
+        this.setState({showResult: this.state.showResult.sort(this.comparisonR)});
+        this.setState({alpha: true})
+    }
+
 sortUsers = () => {
-    this.setState({showResult: this.state.showResult.sort(this.compare)});
-    this.setState({alpha: true})
+    if(this.state.alpha === 'true') {
+        this.sortUsers();
+    } else {
+        this.sortUsersRev();
+    }
 }
 
-//filtering
+//filters
 
-// filterOver = () => {
-//     const filterUser = this.state.filterResultOver;
-//     const filteredAgeOver = filterUser.filter(user => user.dob.age >= 21);
-//     this.setState({showResult: filteredAgeOver});
-// }
-
-// filterUnder = () => {
-//     const filterUser = this.state.filterResultUnder;
-//     const filteredAgeUnder = filterUser.filter(user => user.dob.age <= 21);
-//     this.setState({showResult: filteredAgeUnder});
-// }
-
-// filter = () => {
-//     const currentFilter = this.state.filter;
-
-//     if(currentFilter === '') {
-//         this.filterOver();
-//         this.setState({filter: 'filteredAgeOver'});
-//     }else if (currentFilter === 'filteredAgeOver') {
-//         this.filterUnder();
-//         this.setState({filter: 'filteredAgeUnder'});
-// } else {
-//     this.setState({showResult: this.state.result});
-//     this.setState({filter: ''});
-// }
-
-
-filterMale = () => {
-    const filterUser = this.state.filterResultMale;
-    const filteredMale = filterUser.filter(user => user.gender === "male");
-    this.setState({showResult: filteredMale});
+filterOver = () => {
+    const filterUser = this.state.filterOver;
+    const filterResultOver = filterUser.filter(user => user.dob.age > 33);
+    this.setState({showResult: filterResultOver});
 }
-
-filterFemale = () => {
-    const filterUser = this.state.filterResultFemale;
-    const filteredFemale = filterUser.filter(user => user.gender === "female");
-    this.setState({showResult: filteredFemale});
+filterUnder = () => {
+    const filterUser = this.state.filterUnder;
+    const filterResultUnder = filterUser.filter(user => user.dob.age < 33);
+    this.setState({showResult: filterResultUnder});
 }
 
 filter = () => {
     const currentFilter = this.state.filter;
 
-    if(currentFilter === '') {
-        this.filterMale();
-        this.setState({filter: 'male'});
-    }
-    else if(currentFilter === 'male') {
-        this.filterFemale();
-        this.setState({filter: 'female'});
-        } 
-    else {
-    this.setState({showResult: this.state.result});
-    this.setState({filter: ''});
-}
-}
-  //need to mount the object to the DOM
-    componentDidMount (){
-        this.getUsers();
-    }
+    if (currentFilter === '') {
+        this.filterOver();
+        this.setState({filter:'filterOver'});
+    } else if (currentFilter === 'filterOver') {
+        this.filterUnder();
+        this.setState({filter:'filterUnder'});
+    } else {
+        this.setState({showResult: this.state.result});
+        this.setState({filter: ''});
+    }};
 
 
-    //render
-    render () {
-        return (
+componentDidMount(){
+    this.getUsers();
+}
+
+    
+render() {
+    return (
             <div className="header">
-                <Users
-                users={this.state.showResult}
-                sortUsers={this.sortAlpha}
-                filterMale={this.filterMale}
-                filter={this.filter}
-                />
+            <Users users={this.state.showResult}
+            sortUsers={this.sortUsers}
+            filterOver={this.filterOver}
+            filter={this.filter}
+            />
             </div>
-        );
+    )
     }
-
 }
-
 export default UserContainer;

@@ -4,16 +4,19 @@ function Users (props)  {
         <div>
 {/*Table starts here*/}
 <table className="table table-bordered table-lg">
-    <thead>
+    <thead> <tr>
+    <td className="col-2"><button onClick={props.filter}> Users (Filter by Age)</button></td>
+    <td className="col-2"><button onClick={props.sortUsers}>Name (Sort by Last Name)</button></td> 
+    </tr>
         <tr>
-            <th className="col-2"><button onClick={props.filter}>Users (Filter by Age)</button></th>
-            <th className="col-2"><button onClick={props.sortUsers}>Name (Sort by Location)</button></th> 
+            
+            <th className="col-2">User Thumbnail</th>
             <th className="col-2">Name</th>        
             <th className="col-2">Location</th>
             <th className="col-2">Cell Phone</th>
             <th className="col-2">Age</th>
             <th className="col-2">Email Address</th>
-            </tr>
+            </tr>            
     </thead>
 
 <tbody>
@@ -30,15 +33,12 @@ function Users (props)  {
                     <td className="col-3">{email}</td>     
                 </tr>
             );
-        })}
+        })};
 </tbody>
 
 </table>
-
-
         </div>
-
     );
 }
-    
+ 
 export default Users
