@@ -32,13 +32,13 @@ function Users (props)  {
                     <td className="col-3">{dob.age}</td> 
                     <td className="col-3">{email}</td>     
                 </tr>
-            );
-        })};
+            )
+        })}
 </tbody>
 
 </table>
         </div>
-    );
+    )
 }
  
 export default Users
